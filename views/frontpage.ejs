@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front Page</title>
+</head>
+
+<body>
+    <h1>Front Page</h1>
+
+    <% if (user) { %>
+        <p>Hello, <%= user.username %>!</p>
+        <a href="/logout">Logout</a>
+        <% } %>
+
+            <h2>Posts from the Community</h2>
+            <ul>
+                <% posts.forEach(post=> { %>
+                    <li>
+                        <h3><a href="/posts/<%= post._id %>">
+                                <%= post.title %>
+                            </a></h3>
+                        <p>
+                            <%= post.content.substring(0, 100) %>...
+                        </p>
+                        <p>Posted by <%= post.author %> on <%= post.createdAt.toLocaleDateString() %>
+                        </p>
+                    </li>
+                    <% }) %>
+            </ul>
+</body>
+
+</html>

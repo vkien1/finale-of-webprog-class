@@ -1,48 +1,46 @@
+// routes/posts.js
 const express = require('express');
-const User = require('../models/User');
-const Post = require('../models/Post'); // Ensure this is correctly pointing to your Post model
 const router = express.Router();
+const Post = require('../models/Post');
+const User = require('../models/User'); // Import User model
+const ensureAuthenticated = require('../middleware/authMiddleware'); // Import the middleware
 
-// Middleware for authentication
-function auth(req, res, next) {
-    if (!req.session.userId) {
-        // Render the error page directly without passing a custom message
-        return res.status(401).render('error');
-    }
-    next();
-}
-// Dashboard (only for logged-in users)
-router.get('/dashboard', auth, async (req, res) => {
+// Front page route: displays all posts, protected by the middleware
+router.get('/frontpage', ensureAuthenticated, async (req, res) => {
     try {
+        const posts = await Post.find({}).sort({ createdAt: -1 });
+        
+        // Retrieve the user object based on the session userId
         const user = await User.findById(req.session.userId);
-        const posts = await Post.find({ author: user._id }); // Fetch posts created by this user
-        res.render('dashboard', { user, posts });
-    } catch (err) {
-        console.error(err);
-        res.redirect('/login');
+
+        // Render the frontpage with both posts and the user object
+        res.render('frontpage', { posts, user });
+    } catch (error) {
+        console.error(error);
+        res.redirect('/');
     }
 });
 
+// Route to create a new post, protected by middleware
+router.post('/create', ensureAuthenticated, async (req, res) => {
+    try {
+        const { title, content } = req.body;
 
-// Create Post
-router.post('/create', auth, async (req, res) => {
-    const user = await User.findById(req.session.userId);
-    const post = new Post({ title: req.body.title, content: req.body.content, author: user._id });
-    await post.save();
-    res.redirect('/posts/dashboard');
-});
+        // Retrieve the user from the session to access username
+        const user = await User.findById(req.session.userId);
 
-// Update Post
-router.post('/edit/:id', auth, async (req, res) => {
-    const { title, content } = req.body;
-    await Post.findByIdAndUpdate(req.params.id, { title, content });
-    res.redirect('/posts/dashboard');
-});
-
-// Delete Post
-router.get('/delete/:id', auth, async (req, res) => {
-    await Post.findByIdAndDelete(req.params.id);
-    res.redirect('/posts/dashboard');
+        const newPost = new Post({
+            title,
+            content,
+            author: user.username, // Store the username as the author of the post
+            createdAt: new Date()
+        });
+        await newPost.save();
+        res.redirect('/posts/frontpage');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error creating post");
+    }
 });
 
 module.exports = router;

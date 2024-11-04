@@ -5,6 +5,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const ensureAuthenticated = require('./middleware/authMiddleware'); // Import the middleware
 
 const app = express();
 
@@ -33,11 +34,17 @@ app.use(session({
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
 app.use('/', authRoutes);  // Mount auth routes at root level
-app.use('/posts', postRoutes);  // Mount post routes under /posts
+app.use('/posts', ensureAuthenticated, postRoutes);  // Protect all post routes
 
-// Home route
+// Home route: Redirect to frontpage if logged in, otherwise render welcome.ejs
 app.get('/', (req, res) => {
-    res.render('index');
+    if (req.session.userId) {
+        // If user is logged in, redirect to frontpage
+        res.redirect('/posts/frontpage');
+    } else {
+        // If not logged in, render the welcome page
+        res.render('index.ejs');
+    }
 });
 
 // Start the server

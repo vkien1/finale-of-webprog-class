@@ -10,7 +10,7 @@ router.post('/register', async (req, res) => {
         const user = new User({ username, email, password });
         await user.save();
         req.session.userId = user._id;
-        res.redirect('/dashboard'); // Updated path
+        res.redirect('/posts/frontpage'); // Redirect to front page after registration
     } catch (err) {
         res.redirect('/register');
     }
@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
     const user = await User.findOne({ email });
     if (user && await user.comparePassword(password)) {
         req.session.userId = user._id;
-        res.redirect('/posts/dashboard'); // Updated path
+        res.redirect('/posts/frontpage'); // Redirect to front page after login
     } else {
         res.redirect('/login');
     }
@@ -32,7 +32,7 @@ router.post('/login', async (req, res) => {
 // Logout
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {
-        if (err) return res.redirect('/posts/dashboard'); // Updated path
+        if (err) return res.redirect('/posts/frontpage'); // Redirect to front page if there's an error on logout
         res.clearCookie('connect.sid');
         res.redirect('/');
     });
