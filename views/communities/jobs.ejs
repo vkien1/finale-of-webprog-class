@@ -5,21 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobs Community</title>
-    <link rel="stylesheet" href="/communities.css"> <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="/communities.css">
 </head>
 
 <body>
-    <!-- Banner section -->
     <div class="banner">
         <a href="/posts/frontpage" class="brand">Kiendom</a>
         <h1>Welcome to the Jobs Community</h1>
     </div>
 
     <div class="container">
-        <!-- Left Column: Create Post Form -->
         <div class="left-column">
+            <!-- Create Post Form -->
             <h2>Create a Post</h2>
-            <form action="/communities/jobs/create-post" method="POST">
+            <form action="/posts/jobs/create-post" method="POST">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" required>
 
@@ -28,9 +27,23 @@
 
                 <button type="submit">Post</button>
             </form>
+
+            <!-- Edit Post Form (Hidden by default) -->
+            <div id="edit-post-form" style="display: none; margin-top: 20px;">
+                <h2>Edit Post</h2>
+                <form id="editForm" method="POST">
+                    <label for="edit-title">Title:</label>
+                    <input type="text" id="edit-title" name="title" required>
+
+                    <label for="edit-content">Content:</label>
+                    <textarea id="edit-content" name="content" required></textarea>
+
+                    <button type="submit" class="button-style">Save Changes</button>
+                    <button type="button" onclick="hideEditForm()" class="button-style">Cancel</button>
+                </form>
+            </div>
         </div>
 
-        <!-- Center Column: Posts List -->
         <div class="center-column">
             <h2>Posts</h2>
             <ul>
@@ -44,20 +57,49 @@
                         </p>
                         <p>Posted by <%= post.author.username %> on <%= post.createdAt.toLocaleString() %>
                         </p>
+
+                        <% if (post.author._id.toString()===user._id.toString()) { %>
+                            <button class="button-style"
+                                onclick="showEditForm('<%= post._id %>', '<%= post.title %>', '<%= post.content %>')">Edit</button>
+                            <form action="/posts/jobs/delete/<%= post._id %>?_method=DELETE" method="POST"
+                                style="display:inline;">
+                                <button type="submit" class="button-style">Delete</button>
+                            </form>
+                            <% } %>
                     </li>
                     <% }) %>
             </ul>
         </div>
 
-        <!-- Right Column: Community Description -->
         <div class="right-column">
             <h2>About the Jobs Community</h2>
-            <p>The School Community is a place for students, educators, and lifelong learners to discuss all things
-                related to education. Share study tips, talk about upcoming exams, connect with classmates, and get
-                advice on managing school life. Whether you're in high school, college, or pursuing additional
-                certifications, join the conversation and support each other's academic journey.</p>
+            <p>This is a hub for job seekers, professionals, and those interested in career growth. Share job hunting
+                tips, discuss industry trends, network, and more.</p>
         </div>
     </div>
+
+    <!-- JavaScript for Show/Hide Edit Form -->
+    <script>
+        function showEditForm(postId, title, content) {
+            const editForm = document.getElementById('edit-post-form');
+            const form = document.getElementById('editForm');
+
+            // Set form action dynamically
+            form.action = `/posts/jobs/edit/${postId}?_method=PUT`;
+
+            // Populate form fields with existing post data
+            document.getElementById('edit-title').value = title;
+            document.getElementById('edit-content').value = content;
+
+            // Show the edit form
+            editForm.style.display = 'block';
+        }
+
+        function hideEditForm() {
+            const editForm = document.getElementById('edit-post-form');
+            editForm.style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>
