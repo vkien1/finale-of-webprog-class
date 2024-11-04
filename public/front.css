@@ -1,0 +1,173 @@
+/* General reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Light gray background */
+    color: #333;
+}
+
+/* Header bar */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f4037; /* Rich dark green */
+    padding: 10px 20px;
+    color: #ffffff;
+}
+
+.header-left h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-right span {
+    margin-right: 15px;
+    color: #ffffff;
+}
+
+.logout-btn {
+    color: #ffffff;
+    background-color: #e57373; /* Soft red for the logout button */
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Main container layout */
+.container {
+    display: flex;
+    max-width: 85%; /* Expands width more */
+    margin: 20px auto;
+    gap: 20px;
+}
+
+/* Sidebar styling */
+.sidebar, .right-sidebar {
+    background-color: #f5f5f5; /* Soft off-white for contrast */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+    flex: 1;
+    max-width: 250px;
+}
+
+.sidebar h2, .right-sidebar h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #1f4037; /* Dark green for headings */
+}
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    color: #1f4037; /* Dark green links */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.sidebar ul li a:hover {
+    color: #3b6e5e; /* Lighter green on hover */
+}
+
+.right-sidebar {
+    flex: 1;
+    max-width: 250px;
+}
+
+.right-sidebar p {
+    line-height: 1.6;
+    color: #666;
+}
+
+/* Main content styling */
+.content {
+    flex: 3;
+    background-color: #f5f5f5; /* Soft off-white */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #1f4037; /* Dark green */
+}
+
+.posts-list {
+    list-style-type: none;
+}
+
+.post {
+    background-color: #e0e0e0; /* Light gray for posts */
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.post h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #1f4037; /* Dark green for post titles */
+}
+
+.post h3 a {
+    color: #1f4037;
+    text-decoration: none;
+}
+
+.post h3 a:hover {
+    text-decoration: underline;
+    color: #3b6e5e; /* Lighter green on hover */
+}
+
+.post-content {
+    margin-top: 10px;
+    color: #555;
+}
+
+.post-info {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .sidebar, .content, .right-sidebar {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+}

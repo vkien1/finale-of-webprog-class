@@ -8,7 +8,9 @@ const ensureAuthenticated = require('../middleware/authMiddleware'); // Import t
 // Front page route: displays all posts, protected by the middleware
 router.get('/frontpage', ensureAuthenticated, async (req, res) => {
     try {
-        const posts = await Post.find({}).sort({ createdAt: -1 });
+        const posts = await Post.find({})
+            .populate('author', 'username') // Populate only the username of the author
+            .sort({ createdAt: -1 });
         
         // Retrieve the user object based on the session userId
         const user = await User.findById(req.session.userId);
@@ -21,22 +23,35 @@ router.get('/frontpage', ensureAuthenticated, async (req, res) => {
     }
 });
 
-// Route to create a new post, protected by middleware
-router.post('/create', ensureAuthenticated, async (req, res) => {
+// Display posts and create form for "School" community
+router.get('/school', ensureAuthenticated, async (req, res) => {
+    try {
+        const posts = await Post.find({ community: 'school' })
+            .populate('author', 'username') // Populate only the username of the author
+            .sort({ createdAt: -1 });
+        const user = await User.findById(req.session.userId);
+        res.render('communities/school', { posts, user });
+    } catch (error) {
+        console.error(error);
+        res.redirect('/');
+    }
+});
+
+// Route to create a new post for "School" community
+router.post('/school/create-post', ensureAuthenticated, async (req, res) => {
     try {
         const { title, content } = req.body;
-
-        // Retrieve the user from the session to access username
         const user = await User.findById(req.session.userId);
 
         const newPost = new Post({
             title,
             content,
-            author: user.username, // Store the username as the author of the post
+            author: user._id, // Store the user ID as the author
+            community: 'school', // Indicate this post belongs to the "School" community
             createdAt: new Date()
         });
         await newPost.save();
-        res.redirect('/posts/frontpage');
+        res.redirect('/posts/school'); // Redirect back to the School community page
     } catch (error) {
         console.error(error);
         res.status(500).send("Error creating post");

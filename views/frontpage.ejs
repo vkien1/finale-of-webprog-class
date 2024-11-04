@@ -4,32 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Front Page</title>
+    <title>CircleHub - Front Page</title>
+    <link rel="stylesheet" href="/front.css"> <!-- Link to external stylesheet -->
 </head>
 
 <body>
-    <h1>Front Page</h1>
+    <!-- Header Bar -->
+    <header>
+        <div class="header-left">
+            <h1>Kiendom</h1>
+        </div>
+        <div class="header-right">
+            <% if (user) { %>
+                <span>Welcome, <%= user.username %>!</span>
+                <a href="/logout" class="logout-btn">Logout</a>
+                <% } %>
+        </div>
+    </header>
 
-    <% if (user) { %>
-        <p>Hello, <%= user.username %>!</p>
-        <a href="/logout">Logout</a>
-        <% } %>
-
-            <h2>Posts from the Community</h2>
+    <div class="container">
+        <!-- Sidebar with community links -->
+        <aside class="sidebar">
+            <h2>Communities</h2>
             <ul>
+                <li><a href="/communities/school">School</a></li>
+                <li><a href="/communities/sports">Sports</a></li>
+                <li><a href="/communities/jobs">Jobs</a></li>
+                <li><a href="/communities/majors">Majors</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main content area -->
+        <main class="content">
+            <h2>Posts from the Community</h2>
+            <ul class="posts-list">
                 <% posts.forEach(post=> { %>
-                    <li>
+                    <li class="post">
                         <h3><a href="/posts/<%= post._id %>">
                                 <%= post.title %>
                             </a></h3>
-                        <p>
+                        <p class="post-content">
                             <%= post.content.substring(0, 100) %>...
                         </p>
-                        <p>Posted by <%= post.author %> on <%= post.createdAt.toLocaleDateString() %>
+                        <p class="post-info">Posted by <%= post.author.username %> on <%=
+                                    post.createdAt.toLocaleString() %>
                         </p>
                     </li>
                     <% }) %>
             </ul>
+        </main>
+
+        <!-- Right side additional information -->
+        <aside class="right-sidebar">
+            <h2>About Kiendom</h2>
+            <p>Kiendom is a place where communities come together. Explore posts, join discussions, and connect with
+                others across diverse topics.</p>
+        </aside>
+    </div>
 </body>
 
 </html>

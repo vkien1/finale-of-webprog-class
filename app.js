@@ -5,7 +5,11 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const ensureAuthenticated = require('./middleware/authMiddleware'); // Import the middleware
+const fs = require('fs'); // For checking if a community template exists
+const ensureAuthenticated = require('./middleware/authMiddleware');
+
+const Post = require('./models/Post'); // Import the Post model
+const User = require('./models/User'); // Import the User model
 
 const app = express();
 
@@ -36,14 +40,57 @@ const postRoutes = require('./routes/posts');
 app.use('/', authRoutes);  // Mount auth routes at root level
 app.use('/posts', ensureAuthenticated, postRoutes);  // Protect all post routes
 
-// Home route: Redirect to frontpage if logged in, otherwise render welcome.ejs
+// Home route: Redirect to frontpage if logged in, otherwise render index.ejs
 app.get('/', (req, res) => {
     if (req.session.userId) {
         // If user is logged in, redirect to frontpage
         res.redirect('/posts/frontpage');
     } else {
         // If not logged in, render the welcome page
-        res.render('index.ejs');
+        res.render('index');
+    }
+});
+
+// Community Routes
+app.get('/communities/:name', ensureAuthenticated, async (req, res) => {
+    const communityName = req.params.name;
+    const communityPath = path.join(__dirname, 'views', 'communities', `${communityName}.ejs`);
+
+    // Check if the community template exists
+    if (!fs.existsSync(communityPath)) {
+        return res.status(404).send("Community page not found.");
+    }
+
+    try {
+        const posts = await Post.find({ community: communityName })
+            .populate('author', 'username') // Populate only the username of the author
+            .sort({ createdAt: -1 });
+        const user = await User.findById(req.session.userId);
+        res.render(`communities/${communityName}`, { posts, user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error loading community page");
+    }
+});
+
+// Route to create a new post in a specific community
+app.post('/communities/:name/create-post', ensureAuthenticated, async (req, res) => {
+    const communityName = req.params.name;
+    const { title, content } = req.body;
+    try {
+        const user = await User.findById(req.session.userId);
+        const newPost = new Post({
+            title,
+            content,
+            author: user._id,
+            community: communityName,
+            createdAt: new Date(),
+        });
+        await newPost.save();
+        res.redirect(`/communities/${communityName}`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error creating post");
     }
 });
 

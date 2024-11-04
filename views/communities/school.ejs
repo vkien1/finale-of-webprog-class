@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Community</title>
+    <link rel="stylesheet" href="/communities.css"> <!-- Link to the external CSS file -->
+</head>
+
+<body>
+    <!-- Banner section -->
+    <div class="banner">
+        <a href="/posts/frontpage" class="brand">Kiendom</a>
+        <h1>Welcome to the School Community</h1>
+    </div>
+
+    <div class="container">
+        <!-- Left Column: Create Post Form -->
+        <div class="left-column">
+            <h2>Create a Post</h2>
+            <form action="/communities/school/create-post" method="POST">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" required></textarea>
+
+                <button type="submit">Post</button>
+            </form>
+        </div>
+
+        <!-- Center Column: Posts List -->
+        <div class="center-column">
+            <h2>Posts</h2>
+            <ul>
+                <% posts.forEach(post=> { %>
+                    <li>
+                        <h3>
+                            <%= post.title %>
+                        </h3>
+                        <p>
+                            <%= post.content %>
+                        </p>
+                        <p>Posted by <%= post.author.username %> on <%= post.createdAt.toLocaleString() %>
+                        </p>
+                    </li>
+                    <% }) %>
+            </ul>
+        </div>
+
+        <!-- Right Column: Community Description -->
+        <div class="right-column">
+            <h2>About the School Community</h2>
+            <p>The School Community is a place for students, educators, and lifelong learners to discuss all things
+                related to education. Share study tips, talk about upcoming exams, connect with classmates, and get
+                advice on managing school life. Whether you're in high school, college, or pursuing additional
+                certifications, join the conversation and support each other's academic journey.</p>
+        </div>
+    </div>
+</body>
+
+</html>
