@@ -12,15 +12,27 @@ body {
     background-color: #1f4037; /* Dark green */
     color: #ffffff;
     padding: 20px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
 }
 
+.banner .brand {
+    position: absolute;
+    left: 20px;
+    font-size: 1.5rem;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+}
 
 .banner h1 {
     margin: 0;
     font-size: 2rem;
+    text-align: center;
 }
 
 /* Container for the three-column layout */
