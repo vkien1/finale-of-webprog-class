@@ -4,6 +4,21 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const ensureAuthenticated = require('../middleware/authMiddleware');
 
+// Route to render the frontpage view from the main views directory
+router.get('/frontpage', ensureAuthenticated, async (req, res) => {
+    try {
+        const posts = await Post.find({})
+            .populate('author', 'username')
+            .sort({ createdAt: -1 });
+
+        const user = await User.findById(req.session.userId);
+        res.render('frontpage', { posts, user }); // Renders from 'views/frontpage.ejs'
+    } catch (error) {
+        console.error(error);
+        res.redirect('/');
+    }
+});
+
 // General route to display posts for any community
 router.get('/:community', ensureAuthenticated, async (req, res) => {
     const communityName = req.params.community;
