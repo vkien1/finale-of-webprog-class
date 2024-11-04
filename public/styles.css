@@ -1,4 +1,4 @@
-/* Reset */
+/* General reset */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +7,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #f0f0f0; /* Light gray background for consistency */
     color: #333;
     display: flex;
     justify-content: center;
@@ -15,19 +15,20 @@ body {
     min-height: 100vh;
 }
 
+/* Header Styling */
 h2 {
-    font-size: 24px;
-    color: #333;
+    font-size: 1.5rem;
+    color: #1f4037; /* Dark green for headings */
     margin-bottom: 20px;
     text-align: center;
 }
 
 /* Centered Container */
 .container {
-    background: #fff;
+    background: #ffffff;
     padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
     text-align: center;
@@ -67,15 +68,15 @@ input[type="password"] {
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
-    border-color: #333;
+    border-color: #1f4037; /* Dark green on focus */
 }
 
 /* Button Styling */
 button {
     padding: 10px;
     font-size: 16px;
-    color: #fff;
-    background-color: #333;
+    color: #ffffff;
+    background-color: #1f4037; /* Dark green for button */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -83,7 +84,7 @@ button {
 }
 
 button:hover {
-    background-color: #555;
+    background-color: #3b6e5e; /* Lighter green on hover */
 }
 
 /* Links */
@@ -94,12 +95,12 @@ p {
 }
 
 a {
-    color: #333;
+    color: #1f4037; /* Dark green links */
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
 }
 
 a:hover {
-    color: #555;
+    color: #3b6e5e; /* Lighter green on hover */
 }
