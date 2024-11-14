@@ -38,4 +38,16 @@ router.get('/logout', (req, res) => {
     });
 });
 
+// Contact Page
+router.get('/contact', (req, res) => {
+    res.render('contact');
+});
+
+// Contact Form Submission
+router.post('/contact', (req, res) => {
+    const { name, email, message } = req.body;
+    console.log(`Contact form submitted by ${name} (${email}): ${message}`);
+    res.send('Thank you for your message!');
+});
+
 module.exports = router;

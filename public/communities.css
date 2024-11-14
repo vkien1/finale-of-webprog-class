@@ -134,6 +134,14 @@ form button[type="submit"]:hover {
     color: #666;
 }
 
+.right-column img {
+    max-width: 100%; /* Ensures the image doesn't overflow the column */
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .button-style {
     padding: 10px;
     background-color: #1f4037;

@@ -21,6 +21,11 @@ header {
     color: #ffffff;
 }
 
+.header-left {
+    display: flex; /* Align logo and text horizontally */
+    align-items: center; /* Center items vertically */
+}
+
 .header-left h1 {
     font-size: 1.5rem;
     font-weight: bold;
@@ -113,6 +118,10 @@ header {
 
 .posts-list {
     list-style-type: none;
+    max-height: 300px; /* Limit height for scroll */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 10px; /* Add padding for scrollbar */
+    margin-bottom: 30px; /* Add margin for spacing */
 }
 
 .post {
@@ -124,7 +133,7 @@ header {
 }
 
 .post h3 {
-    margin: 0;
+    margin: 0 0 10px 0; /* Add bottom margin for spacing */
     font-size: 1.2rem;
     color: #1f4037; /* Dark green for post titles */
 }
@@ -148,6 +157,155 @@ header {
     margin-top: 10px;
     font-size: 0.9rem;
     color: #888;
+}
+
+/* Section styling */
+.section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    margin-bottom: 20px;
+}
+
+.community-highlights .community {
+    margin-bottom: 20px;
+}
+
+.testimonials blockquote {
+    font-style: italic;
+    margin: 0 0 10px 0;
+}
+
+.testimonials cite {
+    display: block;
+    text-align: right;
+    color: #666;
+}
+
+/* Sidebar container spacing */
+.sidebar {
+    padding: 20px;
+}
+
+/* Menu item spacing */
+.menu-item {
+    margin-bottom: 20px; /* Adds spacing between Home and Contact Me */
+}
+
+.dropdown {
+    margin-bottom: 20px; /* Adds spacing between Communities dropdown and other items */
+}
+
+/* Dropdown button styling for consistency */
+.menu-button, .dropdown-button {
+    width: 100%;
+    background-color: #1f4037; /* Dark green */
+    color: #ffffff;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    text-align: left;
+    font-weight: bold;
+}
+
+.menu-button:hover, .dropdown-button:hover {
+    background-color: #3b6e5e; /* Lighter green on hover */
+}
+
+/* Arrow styling for dropdown */
+.arrow {
+    transition: transform 0.3s ease; /* Smooth rotation for arrow */
+}
+
+/* Dropdown content styling */
+.dropdown-content {
+    display: none;
+    list-style-type: none;
+    padding: 0;
+    margin-top: 5px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-content li {
+    padding: 10px;
+}
+
+.dropdown-content li a {
+    color: #1f4037; /* Dark green links */
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+}
+
+.dropdown-content li a:hover {
+    background-color: #e8f0e8;
+}
+
+/* Expanded Dropdown */
+.dropdown.open .dropdown-content {
+    display: block;
+}
+
+.dropdown.open .arrow {
+    transform: rotate(180deg); /* Rotate arrow upwards when expanded */
+}
+
+/* Contact Form Styling */
+.contact-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-form .form-group {
+    margin-bottom: 15px;
+}
+
+.contact-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #1f4037; /* Dark green */
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.contact-form button {
+    background-color: #1f4037; /* Dark green */
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.contact-form button:hover {
+    background-color: #3b6e5e; /* Lighter green on hover */
 }
 
 /* Responsive design for smaller screens */

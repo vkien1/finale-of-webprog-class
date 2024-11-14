@@ -12,6 +12,7 @@
     <!-- Header Bar -->
     <header>
         <div class="header-left">
+            <img src="/images/logo.png" alt="Kiendom Logo" style="height: 40px; margin-right: 10px;">
             <h1>Kiendom</h1>
         </div>
         <div class="header-right">
@@ -25,33 +26,76 @@
     <div class="container">
         <!-- Sidebar with community links -->
         <aside class="sidebar">
-            <h2>Communities</h2>
-            <ul>
-                <li><a href="/communities/school">School</a></li>
-                <li><a href="/communities/sports">Sports</a></li>
-                <li><a href="/communities/jobs">Jobs</a></li>
-                <li><a href="/communities/majors">Majors</a></li>
-            </ul>
+            <!-- Home Button -->
+            <div class="menu-item">
+                <a href="/" class="menu-button">Home</a>
+            </div>
+            <!-- Dropdown for Communities with arrow -->
+            <div class="dropdown">
+                <button class="dropdown-button">
+                    Communities
+                    <span class="arrow">&#9662;</span> <!-- Downward arrow symbol -->
+                </button>
+                <ul class="dropdown-content">
+                    <li><a href="/communities/school">School</a></li>
+                    <li><a href="/communities/sports">Sports</a></li>
+                    <li><a href="/communities/jobs">Jobs</a></li>
+                    <li><a href="/communities/majors">Majors</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Me Button -->
+            <div class="menu-item">
+                <a href="/contact" class="menu-button">Contact Me</a>
+            </div>
         </aside>
 
         <!-- Main content area -->
         <main class="content">
-            <h2>Posts from the Community</h2>
-            <ul class="posts-list">
-                <% posts.forEach(post=> { %>
-                    <li class="post">
-                        <h3><a href="/posts/<%= post._id %>">
+            <div class="section">
+                <h2>Featured Posts</h2>
+                <ul class="posts-list">
+                    <% posts.slice(0, 3).forEach(post=> { %> <!-- Display only the first 3 posts -->
+                        <li class="post">
+                            <h3>
                                 <%= post.title %>
-                            </a></h3>
-                        <p class="post-content">
-                            <%= post.content.substring(0, 100) %>...
-                        </p>
-                        <p class="post-info">Posted by <%= post.author.username %> on <%=
-                                    post.createdAt.toLocaleString() %>
-                        </p>
-                    </li>
-                    <% }) %>
-            </ul>
+                            </h3>
+                            <p class="post-content">
+                                <%= post.content.substring(0, 100) %>...
+                            </p>
+                            <p class="post-info">Posted by <%= post.author.username %> on <%=
+                                        post.createdAt.toLocaleString() %>
+                            </p>
+                        </li>
+                        <% }) %>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Community Highlights</h2>
+                <div class="community-highlights">
+                    <div class="community">
+                        <h3>School</h3>
+                        <p>Join discussions about school life, tips, and more.</p>
+                        <a href="/communities/school" class="menu-button">Explore School</a>
+                    </div>
+                    <div class="community">
+                        <h3>Sports</h3>
+                        <p>Connect with sports enthusiasts and share your passion.</p>
+                        <a href="/communities/sports" class="menu-button">Explore Sports</a>
+                    </div>
+                    <div class="community">
+                        <h3>Jobs</h3>
+                        <p>Find job opportunities and career advice.</p>
+                        <a href="/communities/jobs" class="menu-button">Explore Jobs</a>
+                    </div>
+                    <div class="community">
+                        <h3>Majors</h3>
+                        <p>Discuss different majors and academic paths.</p>
+                        <a href="/communities/majors" class="menu-button">Explore Majors</a>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <!-- Right side additional information -->
@@ -61,6 +105,24 @@
                 others across diverse topics.</p>
         </aside>
     </div>
+
+    <!-- Footer with User Testimonials -->
+    <footer class="section">
+        <h2>User Testimonials</h2>
+        <div class="testimonials">
+            <blockquote>
+                "Kiendom has been a fantastic platform for connecting with like-minded individuals!"
+            </blockquote>
+            <cite>- Happy User</cite>
+        </div>
+    </footer>
 </body>
+
+<script>
+    document.querySelector('.dropdown-button').addEventListener('click', function () {
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.classList.toggle('open'); // Toggle the 'open' class to show/hide content and rotate arrow
+    });
+</script>
 
 </html>
